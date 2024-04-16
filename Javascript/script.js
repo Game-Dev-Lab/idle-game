@@ -3,10 +3,27 @@ const arbreCliquable = document.querySelector('.arbrePrincipal');
 const portemonnaie = document.querySelector('.portemonnaie')
 let points = 0;
 
-
-    //AJOUTER EVENEMENT CLIC SUR LA LICORNE
-  arbreCliquable.addEventListener ('click', () => {
-    //INCREMENTER LES POINTS
-    points++;
+    function mettreAJourPorteMonnaie() {
     portemonnaie.textContent = `Porte-monnaie : ${points}`;
+    }
+
+
+// FONCTIONS AU CLIC
+    function gererClicArbre() { 
+        points++;
+        mettreAJourPorteMonnaie();
+    }
+    
+    //ajouter clic sur l'arbre + incrémenter points
+    arbreCliquable.addEventListener ('click', () => {
 });
+
+
+
+
+// ----- FONCTIONS AUTOMATIQUES
+   function ajouterPointsAutomatiquement() {  // POINTS AUTOMATIQUES TOUTES LES 5 secondes(5000 millisecondes)
+      points++;
+      mettreAJourPorteMonnaie(); 
+}
+    setInterval(ajouterPointsAutomatiquement, 5000);

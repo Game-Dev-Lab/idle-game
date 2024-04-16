@@ -1,15 +1,16 @@
 body {
-    background-image: url('Assets/background.jpeg');
+    background-image: url('assets/images/background.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 
 .portemonnaie {
-    background-color: rgb(255, 255, 255);
     border : 2px solid white
 }
 .pieceMonnaie  { width: 50px;}
 
 
-.tchoup {font: 10px;}
+.iconePouvoirs{
+    width: 60px;
+}
