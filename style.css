@@ -5,12 +5,91 @@ body {
 }
 
 
-.portemonnaie {
+.argentDisponible {
+    position: relative; left: 50px;
+    height: 50px;
+    width: 200px;
+    background-color: blanchedalmond;
     border : 2px solid white
+
 }
-.pieceMonnaie  { width: 50px;}
 
 
 .iconePouvoirs{
     width: 60px;
 }
+.boutique-pouvoirs{
+    max-height: 400px;
+    max-width: 250px;
+    overflow-y: auto;
+    font-family: 'VT323';
+}
+    .boutique-pouvoirs h2 {
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .boutique-pouvoirs p{
+        font-family: 'Quantico';
+    }
+  
+    .boutique-pouvoirs button {
+        color: #000;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 10px;
+    }
+
+
+    .objets-pouvoirs  {
+        background-color: rgba(255, 255, 255, 0.205);
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    /* SECTION DES BONUS D'AMELIORATION*/
+    .boutique-ameliorations {
+        max-width: 100%;
+        max-height: 90px;
+        overflow-x: auto;
+        white-space: nowrap;
+        background-color: #351f02;
+        padding: 50px 10px 10px 10px; /*haut droite bas gauche */
+        font-family: 'VT323';
+        color: #fff;
+}
+    
+    .objets-ameliorations {
+        background-color: #4b331b;
+        color: #fff;
+        padding: 2px;
+        margin-right: 15px;
+        border-radius: 5px;
+  }
+    
+
+    /*LICORNE */
+.narrateur {
+    height: 200px;
+    position: relative;
+    top:120px;
+}
+
+
+
+
+    /* STYLE BARRE DE SCROLL DE LA BOUTIQUE */
+*::-webkit-scrollbar {
+    width:10px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #CF3EC1;
+    border-radius: 20px;
+  }  

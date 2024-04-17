@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- POLICES D'ÉCRITURE-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
     <title>IDLE GAME</title>
 </head>
 
 <body>
 <header class="d-flex justify-content-between">
-    <section> <!-- ARGENT DISPO-->
-       <div class="portemonnaie"> <img src="assets/images/piece.png" class="pieceMonnaie">
-    </div>
+    <section class="argentDisponible"> <!-- ARGENT DISPO-->
+       <div class="portemonnaie"> </div>
+       <div class="portebillets"> </div>
     </section>
+
     <section> <!-- BARRE DE PROGRESSION IGNORER POUR L'INSTANT-->
         <div class="progress mb-3" style="width: 20%">
         <div class="progress-bar  bg-warning" role="progressbar"  aria-valuemin="0" aria-valuemax="100"></div>
@@ -24,74 +29,102 @@
 
 <div class="row">           <!-- 1ERE LIGNE -->
     <div class="col-sm-6">  <!-- 1ERE COLONNE -->
-        <section class="boutique-pouvoirs d-flex flex-column" 
-                 style="background-color: lightcoral;">
-        <div>
-            <img src="assets/images/soleil.png" class="iconePouvoirs">
-                <p> Rayons d'or AUTOMATIQUE<br>
-                     Les rayons chauds du soleil enrichissent votre trésor en générant des pièces d'or chaque jour à midi.
-                </p>
-        </div>
+        <section class="boutique-pouvoirs d-flex flex-column border rounded p-3" 
+                 style="background-color: #351f02; color: #fff;">
+             <h2 class="text-center mb-4">Boutique de Pouvoirs</h2>
+             <div class="objets-pouvoirs">
+                    <h3> Rayons d'or</h3>
+                    <p> +10pts/min</p>
+                    <img src="assets/images/soleil.png" class="iconePouvoirs" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Les rayons chauds du soleil enrichissent votre trésor en générant 10 pièces/minutes.">
+                    <button class="btn bg-white" onclick="acheterPouvoirAutomatique(10, 60, 10)"> 10🪙</button>
+             </div>
+     
 
-        <div>         
-            <img src="assets/images/feuille.png" class="iconePouvoirs">
-            <p> AUTOMATIQUE <br>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </p>
-        </div>
+             <div class="objets-pouvoirs">
+                <img src="assets/images/feuille.png" class="iconePouvoirs">
+                <button class="btn bg-white "> 50🪙</button>
 
-        <div> 
-            <img src="assets/images/epee.png" class="iconePouvoirs"> 
+                <p> AUTOMATIQUE <br>
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </p>
+             </div>
+
+             <div class="objets-pouvoirs">
+                <img src="assets/images/epee.png" class="iconePouvoirs"> 
+                 <button class="btn bg-white"> 80🪙</button>
+ 
                 <p> CLIC <br>
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni 
-                    dolores eos qui ratione voluptatem sequi nesciunt.
-                </p>
-        </div>
+                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni 
+                        dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+             </div>
 
-        <div> pouvoir 4
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </div>
+             <div class="objets-pouvoirs">
+                    <img src="assets/images/gemme.png" class="iconePouvoirs"> 
+                    <button class="btn bg-white"> 150🪙</button>
+                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                   </p>
+            </div>
 
         </section>
     </div>  
 
     <div class="col-sm-6"> <!--2E COLONNE -->
-        <section>
-            <div> Bonus1  
-                <p> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni 
-                    dolores eos qui ratione voluptatem sequi nesciunt.
-                </p>
-        </div>
+        <section>   
+             <div class="boutique-ameliorations d-flex">
+                <h2> Améliorations de pouvoirs </h2>
+                <div class="objets-ameliorations"> 
+                     <img src="assets/images/gemme.png" class="iconePouvoirs" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 1">
+                </div>
 
-        <div> Bpnus 2
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </div>
+                <div class="objets-ameliorations"> 
+                    <img src="assets/images/gemme.png" class="iconePouvoirs" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 2">
+                </div>
 
+             </div>
         </section>
-    </div>
-           
+
+    </div> <!-- FIN 2E COLONNE-->          
 </div> <!-- FIN 1ERE LIGNE-->
 
 <div class="row"> <!-- 2EME LIGNE -->
-    <div class="col-sm-6">  <!-- 1ERE COLONNE -->
-        <section>
-            <img src="assets/images/licorne.png" class="narrateur">
-        </section>
-    </div>
 
-    <div class="col-sm-6"> <!--2E COLONNE -->
-        <section class="jeu"> 
-                <!-- JEU  -->
+    <div class="col-4">  <!-- 1e COLONNE -->
+    <!-- BULLE DE DIALOGUE -->
+     <div id="licornePopover" class="popover d-none">
+                <button type="button" class="btn-close" onclick="fermerLicornePopover()"></button>
+                <div class="popover-body">
+                <span id="licorneMessage"></span>
+                </div>
+    </div>
+        <img src="assets/images/licorne.png" class="narrateur" >
+        
+        <!-- EASTER EGG TAS DE TERRE-->
+        <section style="position: absolute;bottom: 0px; left:50px"> 
+            <img src="assets/images/terre.png" class="iconePouvoirs bonus1">
+        </section>
+
+
+    </div> <!--FIN 1ere COLONNE-->
+
+    <div class="col-4"> <!--2E COLONNE -->
+        <section style="position: absolute;top: 300px;"> 
             <img src="assets/images/arbre.png" class="arbrePrincipal">
         </section>
     </div>
+
+    <div class="col-4"> <!--3E COLONNE - pas encore défini -->
+        <section style="position: absolute; bottom: 0px; left: 20; right: 0;">
+            <img src="assets/images/coffre.png" class="">
+
+        </section>
+    </div>
+
 </div> <!-- FIN 2EME LIGNE-->
 </main>
 
 <footer>
-    </div>
+    
 
 </footer>
 
