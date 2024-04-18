@@ -10,6 +10,24 @@ const bonusTerre = document.querySelector('.bonus1')
 let intervalId;
 let tauxGenerationAuto;
 
+// VARIABLES DES BOUTONS
+const btnSoleil = document.querySelector('#btn-soleil');
+
+// VARIABLES DES POUVOIRS
+const soleil = {
+  "cout": 10,
+  "temps": 60,
+  "ptsGen": 10,
+};
+
+const feuille = {
+  "cout": 100,
+  "temps": "",
+  "ptsGen": ""
+};
+
+// -----------------FONCTIONS----------------------- 
+
     function mettreAJourPorteMonnaie() {
     portemonnaie.textContent = `🪙 : ${points}`;
     }
@@ -44,12 +62,21 @@ function gererClicBonusTerre() {
    //déclare 
  setInterval(ajouterPointsAutomatiquement, 5000);
 
+
+
 //ACHAT DE POUVOIRS AUTO
 function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
-  if(points >= cout){  
-    points -= cout; 
-    mettreAJourPorteMonnaie();  
+  if(points >= soleil.cout){
+        points -= cout; 
+
+    // VARIABLES : Augmente  prix et capacité de génération
+    cout += 10; // Augmente le prix de 10 à chaque achat
+    soleil.cout = soleil.cout + 10;
+    pointsParGeneration += 10; // Augmente le pts de 10 par min
+    
     tauxGenerationAuto = pointsParGeneration;
+    mettreAJourPorteMonnaie();
+
     // Déclenche génération auto de pts en fonction du tps entre chaque génération
      if (!intervalId) {
       intervalId = setInterval(function() {
@@ -59,12 +86,8 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
 }
     afficherLicornePopover("Pouvoir acheté !");
 } else {
-    afficherLicornePopover("Pas assez de sous frero  ");
+    afficherLicornePopover("Tu n'as pas assez de pièces.. Continues de cliquer !");
   }}
-
-
-
-
 
 // BULLE DE DIALOGUE
       function afficherLicornePopover(message) {
@@ -89,7 +112,19 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
 //-------  LOCAL STORAGE ----------
 
 // DESCRIPTION POUVOIR AU SURVOL  
-  var popovers = document.querySelectorAll('[data-bs-toggle="popover"]');
+  let popovers = document.querySelectorAll('[data-bs-toggle="popover"]');
   popovers.forEach(function (popover) {
     new bootstrap.Popover(popover);
   });
+
+//-------  INITIALISATION APP ----------
+
+function  initialiserApp() {
+  btnSoleil.addEventListener('click', function() {
+    acheterPouvoirAutomatique(soleil.cout, soleil.temps,soleil.ptsGen);
+
+    btnSoleil.innerText = ((soleil.cout) + '🪙'); // Ajouter 10 au prix total pour refléter l'augmentation du prix
+  });  
+}
+
+initialiserApp();
