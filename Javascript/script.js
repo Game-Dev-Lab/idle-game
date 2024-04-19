@@ -7,24 +7,27 @@ let billets = 0;
 
       //EASTER EGG
 const bonusTerre = document.querySelector('.bonus1')
+
 let intervalId;
+let intervalIdFeuille;
 
 let tauxGenerationAuto = 0;
 
 // VARIABLES DES BOUTONS
 const btnSoleil = document.querySelector('#btn-soleil');
+const btnFeuille = document.querySelector('#btn-feuille');
 
 // VARIABLES DES POUVOIRS
 const soleil = {
   "cout": 10,
-  "temps": 10,
+  "temps": 30,
   "ptsGen": 10,
 };
 
 const feuille = {
-  "cout": 100,
-  "temps": "",
-  "ptsGen": ""
+  "cout":150 ,
+  "temps":60,
+  "ptsGen": 100,
 };
 
 // -----------------FONCTIONS----------------------- 
@@ -66,12 +69,8 @@ function gererClicBonusTerre() {
 
 
 //ACHAT DE POUVOIRS AUTO
-function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
-  
-  
-  
-  if(points >= soleil.cout){
-        points -= cout; 
+function acheterPouvoirAutomatique(pouvoir,cout,tempsEntrePoints,pointsParGeneration){
+  if (points >= soleil.cout && pouvoir === 'soleil') {        points -= cout; 
 
     // VARIABLES : Augmente  prix et capacité de génération
     cout += 10; // Augmente le prix de 10 à chaque achat
@@ -79,7 +78,6 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
 
     // Augmente le pts de 10 par min
     pointsParGeneration += 10; 
-
 
          // Affiche la valeur de ptsGen avant et après l'augmentation
      console.log("Valeur de ptsGen avant l'augmentation :", soleil.ptsGen);
@@ -89,26 +87,56 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
     console.log("tauxGenerationAuto:", tauxGenerationAuto);
 
     mettreAJourPorteMonnaie();
-
-    if (!intervalId) {
-      intervalId = setInterval(function () {
-        console.log('soleil.ptsGen:', soleil.ptsGen);
-        console.log('tauxGenerationAuto:', tauxGenerationAuto);
-        points += soleil.ptsGen;
-        mettreAJourPorteMonnaie();
-      }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
-    }
-
+   // POUVOIR SOLEIL
+if (!intervalId) {
+  intervalId = setInterval(function () {
+    console.log('soleil.ptsGen:', soleil.ptsGen);
+    console.log('tauxGenerationAuto:', tauxGenerationAuto);
+    points += soleil.ptsGen;
+    mettreAJourPorteMonnaie();
+  }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
+}
 
     // Mettre à jour le taux de génération affiché sous l'icône du soleil
     const tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
-    tauxGenerationSoleil.textContent = `Génère: ${soleil.ptsGen}🪙/min`;
-
-
+    tauxGenerationSoleil.textContent = `Génère: ${soleil.ptsGen}🪙/0.30s`;
     afficherLicornePopover("Pouvoir acheté !");
-} else {
-    afficherLicornePopover("Tu n'as pas assez de pièces.. Continues de cliquer !");
-  }}
+
+
+    
+} else if (points >= feuille.cout && pouvoir === 'feuille') {
+  points -= cout;
+    //VARIABLES
+    cout += 50; //augmente cout de 50pcs par achat
+    feuille.cout = feuille.cout + 50;
+
+    pointsParGeneration +=100;
+    console.log("Valeur de ptsGen FEUILLLE avant l'augmentation :", feuille.ptsGen);
+    feuille.ptsGen = pointsParGeneration; // Met à jour la valeur de ptsGen
+    console.log("Valeur de ptsGen FEUIILLLE après l'augmentation :", feuille.ptsGen);
+    tauxGenerationAuto = pointsParGeneration;
+    console.log("tauxGenerationAuto:", tauxGenerationAuto);
+      
+    mettreAJourPorteMonnaie();
+    //POUVOIR FEUILLES
+
+    if (!intervalIdFeuille) {
+      intervalIdFeuille = setInterval(function () {
+        console.log('feuille.ptsGen:', feuille.ptsGen);
+        console.log('tauxGenerationAuto:', tauxGenerationAuto);
+        points += feuille.ptsGen;
+        mettreAJourPorteMonnaie();
+      }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
+    }
+      //MAJ du p qui affiche le taux
+      const tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
+      tauxGenerationFeuille.textContent = `Génère: ${feuille.ptsGen}🪙/min`;
+
+      afficherLicornePopover("Pouvoir acheté !");
+    } else {
+      afficherLicornePopover("Tu n'as pas assez de pièces.. Continues de cliquer !");
+    }
+  }
 
 // BULLE DE DIALOGUE
       function afficherLicornePopover(message) {
@@ -124,7 +152,7 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
         }, 5000); // Durée en millisecondes (5 secondes dans cet exemple)
       }
 
-      // Fonction pour fermer la bulle de dialogue de la licorne
+      // Fonction pour fermer la bulle de dialogue 
       function fermerLicornePopover() {
         const licornePopover = document.getElementById('licornePopover');
         licornePopover.classList.add('d-none');
@@ -132,19 +160,19 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
 
 //-------  LOCAL STORAGE ----------
 
-// DESCRIPTION POUVOIR AU SURVOL  
-  let popovers = document.querySelectorAll('[data-bs-toggle="popover"]');
-  popovers.forEach(function (popover) {
-    new bootstrap.Popover(popover);
-  });
 
 //-------  INITIALISATION APP ----------
 
-function  initialiserApp() {
-    btnSoleil.addEventListener('click', function() {
-    acheterPouvoirAutomatique(soleil.cout, soleil.temps,soleil.ptsGen);
-    btnSoleil.innerText = ((soleil.cout) + '🪙'); // Ajouter 10 au prix total pour refléter l'augmentation du prix
-  });  
+function initialiserApp() {
+  btnSoleil.addEventListener('click', function() {
+    acheterPouvoirAutomatique('soleil', soleil.cout, soleil.temps, soleil.ptsGen);
+    btnSoleil.innerText = ((soleil.cout) + '🪙'); 
+  });
+
+  btnFeuille.addEventListener('click', function() {
+    acheterPouvoirAutomatique('feuille',feuille.cout, feuille.temps, feuille.ptsGen);
+    btnFeuille.innerText = ((feuille.cout) + '🪙'); 
+  });
 }
 
 initialiserApp();
