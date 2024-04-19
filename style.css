@@ -13,6 +13,21 @@ body {
     border : 2px solid white
 
 }
+/* PIECES QUI TOMBE AU CLIC DE L'ARBRE*/
+@keyframes tomber {
+    0% { transform: translateY(-200px); }
+    100% { transform: translateY(400px); }
+  }
+  
+  .piecesTombees {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: gold;
+    border-radius: 50%;
+    animation: tomber 1s linear;
+  }
+  
 
 /* SECTION DE LA BOUTIQUE DES POUVOIRS  */
 .iconePouvoirs{
@@ -41,27 +56,33 @@ body {
         font-family: 'Press Start 2P', cursive;
         font-size: 10px;
     }
-
-
+     
+    .boutique-pouvoirs button:hover {
+        color: #000;
+    }
     .objets-pouvoirs  {
         background-color: rgba(255, 255, 255, 0.205);
-        padding: 15px;
+        padding: 15px 10px 0px 10px;
         margin-bottom: 15px;
-        border-radius: 5px;
+        border-radius: 9px;
     }
 
 /* SECTION DES BONUS D'AMELIORATION*/
     .boutique-ameliorations {
-        max-width: 100%;
+        max-width: 60%;
         max-height: 400px;
         background-color: #351f02;
-        padding: 50px 10px 10px 10px; /*haut droite bas gauche */
+        padding: 15px 10px 10px 10px; /*haut droite bas gauche */
         font-family:'VT323';
         color: #fff;
 }
+.boutique-ameliorations div {
+    display: flex;
+    justify-content: space-evenly;
+}
     
     .objets-ameliorations {
-                background-color: #4b331b;
+        background-color: #4b331b;
         width: fit-content;
         height: fit-content;
         color: #fff;
@@ -70,19 +91,42 @@ body {
         border-radius: 5px;
   }
 
-
-    
-
     /*LICORNE */
 .narrateur {
     height: 200px;
     position: relative;
     top:120px;
 }
-
-
-
-
+/* bulle*/
+.comic-dialogue {
+    position: absolute;
+    bottom: 20%; 
+    width: fit-content;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .comic-tail {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #000000;
+  }
+  
+  .comic-content {
+    font-family: 'VT323';
+    font-size: 14px;
+    color: #000;
+  }
+  
     /* STYLE BARRE DE SCROLL DE LA BOUTIQUE */
 *::-webkit-scrollbar {
     width:10px;

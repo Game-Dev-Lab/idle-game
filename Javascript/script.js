@@ -13,10 +13,12 @@ let intervalIdFeuille;
 
 let tauxGenerationAuto = 0;
 
-// VARIABLES DES BOUTONS
+// VARIABLES BOUTIQUE (bouton,texte)
 const btnSoleil = document.querySelector('#btn-soleil');
 const btnFeuille = document.querySelector('#btn-feuille');
 
+let tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
+let tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
 // VARIABLES DES POUVOIRS
 let soleil = {
   "cout": 10,
@@ -78,7 +80,7 @@ function acheterPouvoirAutomatique(pouvoir,cout,tempsEntrePoints,pointsParGenera
   if (points >= soleil.cout && pouvoir === 'soleil') {        points -= cout; 
 
     // VARIABLES : Augmente  prix et capacité de génération
-    cout += 10; // Augmente le prix de 10 à chaque achat
+    cout += 10; 
     soleil.cout = soleil.cout + 10;
 
     // Augmente le pts de 10 par min
@@ -104,15 +106,13 @@ if (!intervalId) {
   }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
 }
 
-    // Mettre à jour le taux de génération affiché sous l'icône du soleil
-    const tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
+    // MAJ texte du taux de génération 
     tauxGenerationSoleil.textContent = `Génère: ${soleil.ptsGen}🪙/0.30s`;
-    afficherLicornePopover("Pouvoir acheté !");
+    afficherLicorneDialogue("Pouvoir acheté !");
 
 
-    
-} else if (points >= feuille.cout && pouvoir === 'feuille') {
-  points -= cout;
+  } else if (points >= feuille.cout && pouvoir === 'feuille') {
+    points -= cout;
     //VARIABLES
     cout += 50; //augmente cout de 50pcs par achat
     feuille.cout = feuille.cout + 50;
@@ -120,6 +120,7 @@ if (!intervalId) {
     pointsParGeneration +=100;
     console.log("Valeur de ptsGen FEUILLLE avant l'augmentation :", feuille.ptsGen);
     feuille.ptsGen = pointsParGeneration; // Met à jour la valeur de ptsGen
+    
     console.log("Valeur de ptsGen FEUIILLLE après l'augmentation :", feuille.ptsGen);
     tauxGenerationAuto = pointsParGeneration;
     console.log("tauxGenerationAuto:", tauxGenerationAuto);
@@ -140,60 +141,81 @@ if (!intervalId) {
       }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
     }
       //MAJ du p qui affiche le taux
-      const tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
       tauxGenerationFeuille.textContent = `Génère: ${feuille.ptsGen}🪙/min`;
 
-      afficherLicornePopover("Pouvoir acheté !");
+      afficherLicorneDialogue("Pouvoir acheté !");
     } else {
-      afficherLicornePopover("Tu n'as pas assez de pièces.. Continues de cliquer !");
+      afficherLicorneDialogue("Tu n'as pas assez de pièces.. Continues de cliquer !");
     }
   }
 
 // BULLE DE DIALOGUE
-      function afficherLicornePopover(message) {
-        const licornePopover = document.getElementById('licornePopover');
-        const licorneMessage = document.getElementById('licorneMessage');
+// Afficher la bulle de dialogue avec le message de la licorne
+function afficherLicorneDialogue(message) {
+  const licorneDialogue = document.getElementById('licorneDialogue');
+  const licorneMessage = document.getElementById('licorneMessage');
 
-        licorneMessage.textContent = message;
-        licornePopover.classList.remove('d-none');
+  licorneMessage.textContent = message;
+  licorneDialogue.classList.remove('d-none');
 
-        // Masquer la bulle de dialogue après quelques secondes
-        setTimeout(function() {
-          licornePopover.classList.add('d-none');
-        }, 5000); // Durée en millisecondes (5 secondes dans cet exemple)
-      }
+  // Masquer la bulle de dialogue après quelques secondes
+  setTimeout(function() {
+    licorneDialogue.classList.add('d-none');
+  }, 50000); // Durée en millisecondes (5 secondes dans cet exemple)
+}
 
-      // Fonction pour fermer la bulle de dialogue 
-      function fermerLicornePopover() {
-        const licornePopover = document.getElementById('licornePopover');
-        licornePopover.classList.add('d-none');
-      }
+// Fonction pour fermer la bulle de dialogue 
+function fermerLicorneDialogue() {
+  const licorneDialogue = document.getElementById('licorneDialogue');
+  licorneDialogue.classList.add('d-none');
+}
 
 //-------  LOCAL STORAGE ----------
-
-    //recup les données et les convertit soit en nb entier soit JSON
-if (localStorage.getItem("points")) {
-  points = parseInt(localStorage.getItem("points"));
-  mettreAJourPorteMonnaie();
-}
-if (localStorage.getItem("billets")) {
-  billets = parseInt(localStorage.getItem("billets"));
-  mettreAJourPorteBillets();
-}
-if (localStorage.getItem("soleil")) {
-  soleil = JSON.parse(localStorage.getItem("soleil"));
-}
-if (localStorage.getItem("feuille")) {
-  feuille = JSON.parse(localStorage.getItem("feuille"));
-}
-
-
 function sauvegarderProgression() {
   localStorage.setItem("points", points.toString());
   localStorage.setItem("billets", billets.toString());
+    //boutique pouvoir
   localStorage.setItem("soleil", JSON.stringify(soleil)); 
   localStorage.setItem("feuille", JSON.stringify(feuille));
-}
+  localStorage.setItem("btnSoleilText", btnSoleil.innerText);
+  localStorage.setItem("btnFeuilleText", btnFeuille.innerText);
+  localStorage.setItem("tauxGenerationSoleil", tauxGenerationSoleil.textContent);
+  localStorage.setItem("tauxGenerationFeuille", tauxGenerationFeuille.textContent);
+  
+    }
+        //recup les données et les convertit soit en nb entier soit JSON
+    if (localStorage.getItem("points")) {
+      points = parseInt(localStorage.getItem("points"));
+      mettreAJourPorteMonnaie();
+    }
+    if (localStorage.getItem("billets")) {
+      billets = parseInt(localStorage.getItem("billets"));
+      mettreAJourPorteBillets();
+    }
+    if (localStorage.getItem("soleil")) {
+      soleil = JSON.parse(localStorage.getItem("soleil"));
+    }
+    if (localStorage.getItem("feuille")) {
+      feuille = JSON.parse(localStorage.getItem("feuille"));
+    }
+    if (localStorage.getItem("btnSoleilText")) {
+      const btnSoleilText = localStorage.getItem("btnSoleilText");
+      btnSoleil.innerText = btnSoleilText;
+    }
+    if (localStorage.getItem("btnFeuilleText")) {
+      const btnFeuilleText = localStorage.getItem("btnFeuilleText");
+      btnFeuille.innerText = btnFeuilleText;
+    }
+    if (localStorage.getItem("tauxGenerationSoleil")) {
+      const tauxGenerationSoleilText = localStorage.getItem("tauxGenerationSoleil");
+      tauxGenerationSoleil.textContent = tauxGenerationSoleilText;
+    }
+    if (localStorage.getItem("tauxGenerationFeuille")) {
+      const tauxGenerationFeuilleText = localStorage.getItem("tauxGenerationFeuille");
+      tauxGenerationFeuille.textContent = tauxGenerationFeuilleText;
+    }
+
+
 //-------  INITIALISATION APP ----------
 
 function initialiserApp() {

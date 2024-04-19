@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- POLICES D'ÉCRITURE-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +34,7 @@
                  style="background-color: #351f02; color: #fff;">
              <h2 class="text-center mb-4">Boutique de Pouvoirs</h2>
              <div class="objets-pouvoirs">
-                    <h3> Rayons d'or</h3>
+                    <h3 animate__animated animate__slideInUp> Rayons d'or</h3>
                     <img src="assets/images/soleil.png" class="iconePouvoirs bouton-achat">
                     <button id="btn-soleil" class="btn bg-white"> 10🪙 </button>
                     <p id="taux-generation-soleil">Génère: 10🪙/0.30s</p>
@@ -51,27 +52,22 @@
              <div class="objets-pouvoirs">
                 <img src="assets/images/epee.png" class="iconePouvoirs bouton-achat"> 
                  <button class="btn bg-white"> 80🪙</button>
- 
-                <p> CLIC <br>
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni 
-                        dolores eos qui ratione voluptatem sequi nesciunt.
-                    </p>
+                <p></p>
              </div>
 
              <div class="objets-pouvoirs">
                     <img src="assets/images/gemme.png" class="iconePouvoirs"> 
-                    <button class="btn bg-white"> 150🪙</button>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                   </p>
+                    <button class="btn bg-white btnBoutique"> 150🪙</button>
+                    <p></p>
             </div>
 
         </section>
     </div>  
 
     <div class="col-sm-6"> <!--2E COLONNE -->
-        <section>   
-             <div class="boutique-ameliorations ">
-                <h2> Améliorations de pouvoirs </h2>
+        <section class="boutique-ameliorations">   
+          <h2 class="text-center"> Améliorations de pouvoirs </h2>
+            <div>
                 <div class="objets-ameliorations"> 
                      <img src="assets/images/gemme.png" class="iconePouvoirs" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 1">
                 </div>
@@ -90,13 +86,11 @@
 
     <div class="col-4">  <!-- 1e COLONNE -->
     <!-- BULLE DE DIALOGUE -->
-     <div id="licornePopover" class="popover d-none">
-                <button type="button" class="btn-close" onclick="fermerLicornePopover()"></button>
-                <div class="popover-body">
-                <span id="licorneMessage"></span>
-                </div>
-    </div>
-        <img src="assets/images/licorne.png" class="narrateur" >
+    <div id="licorneDialogue" class="comic-dialogue d-none">
+        <div class="comic-tail"></div>
+        <div class="comic-content" id="licorneMessage"></div>
+      </div>
+              <img src="assets/images/licorne.png" class="narrateur" >
         
         <!-- EASTER EGG TAS DE TERRE-->
         <section style="position: absolute;bottom: 0px; left:50px"> 
@@ -109,6 +103,7 @@
     <div class="col-4"> <!--2E COLONNE -->
         <section style="position: absolute;top: 300px;"> 
             <img src="assets/images/arbre.png" class="arbrePrincipal">
+            <div class="piecesTombees"></div>
         </section>
     </div>
 
