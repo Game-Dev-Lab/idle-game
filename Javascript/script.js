@@ -18,13 +18,13 @@ const btnSoleil = document.querySelector('#btn-soleil');
 const btnFeuille = document.querySelector('#btn-feuille');
 
 // VARIABLES DES POUVOIRS
-const soleil = {
+let soleil = {
   "cout": 10,
   "temps": 30,
   "ptsGen": 10,
 };
 
-const feuille = {
+let feuille = {
   "cout":150 ,
   "temps":60,
   "ptsGen": 100,
@@ -50,11 +50,14 @@ bonusTerre.addEventListener('click', gererClicBonusTerre);
 function gererClicArbre() { 
   points++;
   mettreAJourPorteMonnaie();
+  sauvegarderProgression();
 }
 
 function gererClicBonusTerre() {
   billets++;
   mettreAJourPorteBillets();
+  sauvegarderProgression();
+
 }
 
 
@@ -62,6 +65,8 @@ function gererClicBonusTerre() {
    function ajouterPointsAutomatiquement() {  // POINTS AUTOMATIQUES TOUTES LES 5 secondes(5000 millisecondes)
       points++;
       mettreAJourPorteMonnaie(); 
+      sauvegarderProgression();
+
 }
    //déclare 
  setInterval(ajouterPointsAutomatiquement, 5000);
@@ -87,6 +92,8 @@ function acheterPouvoirAutomatique(pouvoir,cout,tempsEntrePoints,pointsParGenera
     console.log("tauxGenerationAuto:", tauxGenerationAuto);
 
     mettreAJourPorteMonnaie();
+    sauvegarderProgression();
+
    // POUVOIR SOLEIL
 if (!intervalId) {
   intervalId = setInterval(function () {
@@ -118,6 +125,8 @@ if (!intervalId) {
     console.log("tauxGenerationAuto:", tauxGenerationAuto);
       
     mettreAJourPorteMonnaie();
+    sauvegarderProgression();
+
     //POUVOIR FEUILLES
 
     if (!intervalIdFeuille) {
@@ -126,6 +135,8 @@ if (!intervalId) {
         console.log('tauxGenerationAuto:', tauxGenerationAuto);
         points += feuille.ptsGen;
         mettreAJourPorteMonnaie();
+        sauvegarderProgression();
+
       }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
     }
       //MAJ du p qui affiche le taux
@@ -160,7 +171,29 @@ if (!intervalId) {
 
 //-------  LOCAL STORAGE ----------
 
+    //recup les données et les convertit soit en nb entier soit JSON
+if (localStorage.getItem("points")) {
+  points = parseInt(localStorage.getItem("points"));
+  mettreAJourPorteMonnaie();
+}
+if (localStorage.getItem("billets")) {
+  billets = parseInt(localStorage.getItem("billets"));
+  mettreAJourPorteBillets();
+}
+if (localStorage.getItem("soleil")) {
+  soleil = JSON.parse(localStorage.getItem("soleil"));
+}
+if (localStorage.getItem("feuille")) {
+  feuille = JSON.parse(localStorage.getItem("feuille"));
+}
 
+
+function sauvegarderProgression() {
+  localStorage.setItem("points", points.toString());
+  localStorage.setItem("billets", billets.toString());
+  localStorage.setItem("soleil", JSON.stringify(soleil)); 
+  localStorage.setItem("feuille", JSON.stringify(feuille));
+}
 //-------  INITIALISATION APP ----------
 
 function initialiserApp() {
