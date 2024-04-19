@@ -8,7 +8,8 @@ let billets = 0;
       //EASTER EGG
 const bonusTerre = document.querySelector('.bonus1')
 let intervalId;
-let tauxGenerationAuto;
+
+let tauxGenerationAuto = 0;
 
 // VARIABLES DES BOUTONS
 const btnSoleil = document.querySelector('#btn-soleil');
@@ -16,7 +17,7 @@ const btnSoleil = document.querySelector('#btn-soleil');
 // VARIABLES DES POUVOIRS
 const soleil = {
   "cout": 10,
-  "temps": 60,
+  "temps": 10,
   "ptsGen": 10,
 };
 
@@ -66,6 +67,9 @@ function gererClicBonusTerre() {
 
 //ACHAT DE POUVOIRS AUTO
 function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
+  
+  
+  
   if(points >= soleil.cout){
         points -= cout; 
 
@@ -76,22 +80,25 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
     // Augmente le pts de 10 par min
     pointsParGeneration += 10; 
 
-    tauxGenerationAuto = pointsParGeneration;
-    mettreAJourPorteMonnaie();
 
-
-     // Affiche la valeur de ptsGen avant et après l'augmentation
+         // Affiche la valeur de ptsGen avant et après l'augmentation
      console.log("Valeur de ptsGen avant l'augmentation :", soleil.ptsGen);
      soleil.ptsGen = pointsParGeneration; // Met à jour la valeur de ptsGen
      console.log("Valeur de ptsGen après l'augmentation :", soleil.ptsGen);
+    tauxGenerationAuto = pointsParGeneration;
+    console.log("tauxGenerationAuto:", tauxGenerationAuto);
 
-    // Déclenche génération auto de pts en fonction du tps entre chaque génération
-     if (!intervalId) {
-      intervalId = setInterval(function() {
-        points += pointsParGeneration;
+    mettreAJourPorteMonnaie();
+
+    if (!intervalId) {
+      intervalId = setInterval(function () {
+        console.log('soleil.ptsGen:', soleil.ptsGen);
+        console.log('tauxGenerationAuto:', tauxGenerationAuto);
+        points += soleil.ptsGen;
         mettreAJourPorteMonnaie();
-    }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
-}
+      }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
+    }
+
 
     // Mettre à jour le taux de génération affiché sous l'icône du soleil
     const tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
@@ -134,9 +141,8 @@ function acheterPouvoirAutomatique(cout,tempsEntrePoints,pointsParGeneration){
 //-------  INITIALISATION APP ----------
 
 function  initialiserApp() {
-  btnSoleil.addEventListener('click', function() {
+    btnSoleil.addEventListener('click', function() {
     acheterPouvoirAutomatique(soleil.cout, soleil.temps,soleil.ptsGen);
-
     btnSoleil.innerText = ((soleil.cout) + '🪙'); // Ajouter 10 au prix total pour refléter l'augmentation du prix
   });  
 }
