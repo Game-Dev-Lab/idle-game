@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- POLICES D'ÉCRITURE-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,11 +14,16 @@
 </head>
 
 <body>
-<header class="d-flex justify-content-between">
-    <section class="argentDisponible"> <!-- ARGENT DISPO-->
-       <div class="portemonnaie"> </div>
-       <div class="portebillets"> </div>
-    </section>
+    <header class="d-flex justify-content-between px-3 py-2 bg-white rounded" style="max-width: 600px;">
+        <section class="argentDisponible" style="color: #fff;"> <!-- ARGENT DISPO-->
+                <div class="portemonnaie"> </div>
+                <div class="portebillets"> </div>
+        </section>
+        <section >
+            <img src="assets/images/quete.png" class="iconePouvoirs">
+            <img src="assets/images/map.png" class="iconePouvoirs">
+        </section>
+
 
     <section> <!-- BARRE DE PROGRESSION IGNORER POUR L'INSTANT-->
         <div class="progress mb-3" style="width: 20%">
@@ -50,7 +55,7 @@
              </div>
 
              <div class="objets-pouvoirs">
-                <img src="assets/images/epee.png" class="iconePouvoirs bouton-achat"> 
+                <img src="assets/images/papillon1.png" class="iconePouvoirs bouton-achat"> 
                  <button class="btn bg-white"> 80🪙</button>
                 <p></p>
              </div>
@@ -69,12 +74,22 @@
           <h2 class="text-center"> Améliorations de pouvoirs </h2>
             <div>
                 <div class="objets-ameliorations"> 
-                     <img src="assets/images/gemme.png" class="iconePouvoirs" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 1">
+                     <img src="assets/images/bonus1.png" class="iconeBonus" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 1">
                 </div>
 
                 <div class="objets-ameliorations d-flex"> 
-                    <img src="assets/images/gemme.png" class="iconePouvoirs" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 2">
+                    <img src="assets/images/gemme.png" class="iconeBonus" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 2">
                 </div>
+                <div class="objets-ameliorations d-flex"> 
+                    <img src="assets/images/bonus3.png" class="iconeBonus" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 2">
+                </div>
+                <div class="objets-ameliorations d-flex"> 
+                    <img src="assets/images/bonus4.png" class="iconeBonus" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 2">
+                </div>
+                <div class="objets-ameliorations d-flex"> 
+                    <img src="assets/images/bonus5.png" class="iconeBonus" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="BONUS 2">
+                </div>
+
 
              </div>
         </section>
@@ -84,7 +99,7 @@
 
 <div class="row"> <!-- 2EME LIGNE -->
 
-    <div class="col-4">  <!-- 1e COLONNE -->
+    <div class="col-2">  <!-- 1e COLONNE -->
     <!-- BULLE DE DIALOGUE -->
     <div id="licorneDialogue" class="comic-dialogue d-none">
         <div class="comic-tail"></div>
@@ -96,8 +111,6 @@
         <section style="position: absolute;bottom: 0px; left:50px"> 
             <img src="assets/images/terre.png" class="iconePouvoirs bonus1">
         </section>
-
-
     </div> <!--FIN 1ere COLONNE-->
 
     <div class="col-4"> <!--2E COLONNE -->
@@ -107,12 +120,22 @@
         </section>
     </div>
 
-    <div class="col-4"> <!--3E COLONNE - pas encore défini -->
+    <div class="col-4"> <!--3E COLONNE  buisson -->
+        <section style="position:absolute; bottom:5px"> 
+            <img src="assets/images/buisson.png" class="buisson">
+        </section>
+    </div>
+
+    <div class="col-4"> <!--4E COLONNE - pas encore défini -->
         <section style="position: absolute; bottom: 0px; left: 20; right: 0;">
-            <img src="assets/images/coffre.png" class="">
+                       <img src="assets/video/bird-peck.gif" id="bird-gif">
+ 
+            <img src="assets/images/coffre.png" class="coffre">
+
 
         </section>
     </div>
+
 
 </div> <!-- FIN 2EME LIGNE-->
 </main>

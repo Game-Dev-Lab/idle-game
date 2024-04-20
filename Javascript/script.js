@@ -169,7 +169,6 @@ function fermerLicorneDialogue() {
   const licorneDialogue = document.getElementById('licorneDialogue');
   licorneDialogue.classList.add('d-none');
 }
-
 //-------  LOCAL STORAGE ----------
 function sauvegarderProgression() {
   localStorage.setItem("points", points.toString());

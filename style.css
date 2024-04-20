@@ -4,15 +4,17 @@ body {
     background-size: cover;
 }
 
-
+/*ÉLEMENTS*/
 .argentDisponible {
     position: relative; left: 50px;
     height: 50px;
     width: 200px;
-    background-color: blanchedalmond;
-    border : 2px solid white
-
+    background-color: rgb(171, 162, 149);
+    border : 1px dotted rgb(0, 0, 0)
 }
+.buisson {width: 230px;}
+.coffre {width: 150px;}
+
 /* PIECES QUI TOMBE AU CLIC DE L'ARBRE*/
 @keyframes tomber {
     0% { transform: translateY(-200px); }
@@ -27,8 +29,6 @@ body {
     border-radius: 50%;
     animation: tomber 1s linear;
   }
-  
-
 /* SECTION DE LA BOUTIQUE DES POUVOIRS  */
 .iconePouvoirs{
     width: 60px;
@@ -90,6 +90,10 @@ body {
         margin-right: 15px;
         border-radius: 5px;
   }
+  .boutique-ameliorations h2 {
+    font-size: 20px; /* ou la taille de police désirée */
+}
+.iconeBonus { width: 45px;}
 
     /*LICORNE */
 .narrateur {
