@@ -16,9 +16,12 @@ let tauxGenerationAuto = 0;
 // VARIABLES BOUTIQUE (bouton,texte)
 const btnSoleil = document.querySelector('#btn-soleil');
 const btnFeuille = document.querySelector('#btn-feuille');
+const btnPapillon = document.querySelector('#btn-papillon');
 
 let tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
 let tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
+const tauxGenerationPapillon = document.getElementById('taux-generation-papillon');
+
 // VARIABLES DES POUVOIRS
 let soleil = {
   "cout": 10,
@@ -30,6 +33,11 @@ let feuille = {
   "cout":150 ,
   "temps":60,
   "ptsGen": 100,
+};
+
+let papillon = {
+  "cout":100,
+  "clic":1,
 };
 
 // -----------------FONCTIONS----------------------- 
@@ -127,6 +135,8 @@ if (!intervalId) {
       
     mettreAJourPorteMonnaie();
     sauvegarderProgression();
+    console.log("Progression sauvegardée .");
+
 
     //POUVOIR FEUILLES
 
@@ -149,6 +159,31 @@ if (!intervalId) {
     }
   }
 
+  // POURVOIR AU CLIC PAPILLON
+  function acheterPapillon() {
+    console.log("Nombre de points disponibles avant l'achat du papillon :", points);
+    console.log("Coût du papillon avant l'achat :", papillon.cout);
+
+    if (points >= papillon.cout) {
+        points -= papillon.cout;
+        papillon.cout += 30;
+        console.log("Nombre de clics du papillon avant l'achat :", papillon.clic);
+        papillon.clic++; // Augmentation du bonus de clic
+
+        btnPapillon.innerText = `${papillon.cout}🪙`;
+        tauxGenerationPapillon.textContent = `Ajoute +${papillon.clic} pièces au clic`;
+
+        mettreAJourPorteMonnaie();
+        sauvegarderProgression();
+        
+
+        console.log("Nombre de points disponibles après l'achat du papillon :", points);
+        console.log("Coût du papillon après l'achat :", papillon.cout);
+        console.log("Nombre de clics du papillon après l'achat :", papillon.clic);
+    } else {
+        afficherLicorneDialogue("Tu n'as pas assez de pièces.. Continue de cliquer !");
+    }
+}
 // BULLE DE DIALOGUE
 // Afficher la bulle de dialogue avec le message de la licorne
 function afficherLicorneDialogue(message) {
@@ -178,10 +213,12 @@ function sauvegarderProgression() {
   localStorage.setItem("feuille", JSON.stringify(feuille));
   localStorage.setItem("btnSoleilText", btnSoleil.innerText);
   localStorage.setItem("btnFeuilleText", btnFeuille.innerText);
+  localStorage.setItem("btnPapillonText", btnPapillon.innerText);
   localStorage.setItem("tauxGenerationSoleil", tauxGenerationSoleil.textContent);
   localStorage.setItem("tauxGenerationFeuille", tauxGenerationFeuille.textContent);
+  localStorage.setItem("tauxGenerationPapillon", tauxGenerationPapillon.textContent);
+
   
-    }
         //recup les données et les convertit soit en nb entier soit JSON
     if (localStorage.getItem("points")) {
       points = parseInt(localStorage.getItem("points"));
@@ -197,6 +234,11 @@ function sauvegarderProgression() {
     if (localStorage.getItem("feuille")) {
       feuille = JSON.parse(localStorage.getItem("feuille"));
     }
+    if (localStorage.getItem("papillon")) {
+      papillon = JSON.parse(localStorage.getItem("papillon"));
+    }
+
+
     if (localStorage.getItem("btnSoleilText")) {
       const btnSoleilText = localStorage.getItem("btnSoleilText");
       btnSoleil.innerText = btnSoleilText;
@@ -205,6 +247,12 @@ function sauvegarderProgression() {
       const btnFeuilleText = localStorage.getItem("btnFeuilleText");
       btnFeuille.innerText = btnFeuilleText;
     }
+    if (localStorage.getItem("btnPapillonText")) {
+      const btnPapillonText = localStorage.getItem("btnPapillonText");
+      btnPapillon.innerText = btnPapillonText;
+    }
+
+
     if (localStorage.getItem("tauxGenerationSoleil")) {
       const tauxGenerationSoleilText = localStorage.getItem("tauxGenerationSoleil");
       tauxGenerationSoleil.textContent = tauxGenerationSoleilText;
@@ -213,8 +261,11 @@ function sauvegarderProgression() {
       const tauxGenerationFeuilleText = localStorage.getItem("tauxGenerationFeuille");
       tauxGenerationFeuille.textContent = tauxGenerationFeuilleText;
     }
-
-
+    if (localStorage.getItem("tauxGenerationPapillon")) {
+      const tauxGenerationPapillonText = localStorage.getItem("tauxGenerationPapillon");
+      tauxGenerationPapillon.textContent = tauxGenerationPapillonText;
+    }
+  }
 //-------  INITIALISATION APP ----------
 
 function initialiserApp() {
@@ -227,6 +278,8 @@ function initialiserApp() {
     acheterPouvoirAutomatique('feuille',feuille.cout, feuille.temps, feuille.ptsGen);
     btnFeuille.innerText = ((feuille.cout) + '🪙'); 
   });
+  
+    acheterPapillon();
 }
 
 initialiserApp();

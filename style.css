@@ -4,6 +4,11 @@ body {
     background-size: cover;
 }
 
+header  {
+    background-color: #351f02;
+    max-width: 600px; 
+}
+
 /*ÉLEMENTS*/
 .argentDisponible {
     position: relative; left: 50px;
@@ -131,7 +136,7 @@ body {
     color: #000;
   }
   
-    /* STYLE BARRE DE SCROLL DE LA BOUTIQUE */
+    /* STYLE BARRE DE SCROLL */
 *::-webkit-scrollbar {
     width:10px;
   }
@@ -141,5 +146,5 @@ body {
   }
   *::-webkit-scrollbar-thumb {
     background-color: #CF3EC1;
-    border-radius: 20px;
+    border-radius: 10px;
   }  

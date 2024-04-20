@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <header class="d-flex justify-content-between px-3 py-2 bg-white rounded" style="max-width: 600px;">
+    <header class="d-flex justify-content-between px-3 py-2 rounded">
         <section class="argentDisponible" style="color: #fff;"> <!-- ARGENT DISPO-->
                 <div class="portemonnaie"> </div>
                 <div class="portebillets"> </div>
@@ -38,6 +38,7 @@
         <section class="boutique-pouvoirs d-flex flex-column border rounded p-3" 
                  style="background-color: #351f02; color: #fff;">
              <h2 class="text-center mb-4">Boutique de Pouvoirs</h2>
+
              <div class="objets-pouvoirs">
                     <h3 animate__animated animate__slideInUp> Rayons d'or</h3>
                     <img src="assets/images/soleil.png" class="iconePouvoirs bouton-achat">
@@ -47,17 +48,16 @@
      
 
              <div class="objets-pouvoirs">
-                <h3> Feuilles</h3>
-                <img src="assets/images/feuille.png" class="iconePouvoirs bouton-achat">
-                <button id="btn-feuille" class="btn bg-white "> 150🪙 </button>
-                <p id="taux-generation-feuille">Génère: 100🪙/min</p>
-
+                    <h3> Feuilles</h3>
+                    <img src="assets/images/feuille.png" class="iconePouvoirs bouton-achat">
+                    <button id="btn-feuille" class="btn bg-white "> 150🪙 </button>
+                    <p id="taux-generation-feuille">Génère: 100🪙/min</p>
              </div>
 
              <div class="objets-pouvoirs">
                 <img src="assets/images/papillon1.png" class="iconePouvoirs bouton-achat"> 
-                 <button class="btn bg-white"> 80🪙</button>
-                <p></p>
+                 <button id="btn-papillon" class="btn bg-white"> 100🪙</button>
+                <p id="taux-generation-papillon"> +1🪙/clic </p>
              </div>
 
              <div class="objets-pouvoirs">
