@@ -14,8 +14,8 @@ let intervalIdFeuille;
 let tauxGenerationAuto = 0;
 
 // VARIABLES BOUTIQUE (bouton,texte)
-const btnSoleil = document.querySelector('#btn-soleil');
-const btnFeuille = document.querySelector('#btn-feuille');
+let btnSoleil = document.querySelector('#btn-soleil');
+let btnFeuille = document.querySelector('#btn-feuille');
 const btnPapillon = document.querySelector('#btn-papillon');
 
 let tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
@@ -181,18 +181,19 @@ function fermerLicorneDialogue() {
 function sauvegarderProgression() {
   localStorage.setItem("points", points.toString());
   localStorage.setItem("billets", billets.toString());
-    //boutique pouvoir
+    //pouvoirs auto
   localStorage.setItem("soleil", JSON.stringify(soleil)); 
   localStorage.setItem("feuille", JSON.stringify(feuille));
 
-
   localStorage.setItem("btnSoleilText", btnSoleil.innerText);
   localStorage.setItem("btnFeuilleText", btnFeuille.innerText);
+
   localStorage.setItem("tauxGenerationSoleil", tauxGenerationSoleil.textContent);
   localStorage.setItem("tauxGenerationFeuille", tauxGenerationFeuille.textContent);
 
-  
-        //recup les données et les convertit soit en nb entier soit JSON
+}
+function chargerProg() {
+  //recup les données et les convertit soit en nb entier soit JSON
     if (localStorage.getItem("points")) {
       points = parseInt(localStorage.getItem("points"));
       mettreAJourPorteMonnaie();
@@ -210,41 +211,39 @@ function sauvegarderProgression() {
 
 
     if (localStorage.getItem("btnSoleilText")) {
-      const btnSoleilText = localStorage.getItem("btnSoleilText");
+      let btnSoleilText = localStorage.getItem("btnSoleilText");
       btnSoleil.innerText = btnSoleilText;
     }
     if (localStorage.getItem("btnFeuilleText")) {
-      const btnFeuilleText = localStorage.getItem("btnFeuilleText");
+      let btnFeuilleText = localStorage.getItem("btnFeuilleText");
       btnFeuille.innerText = btnFeuilleText;
     }
-    if (localStorage.getItem("btnPapillonText")) {
-      const btnPapillonText = localStorage.getItem("btnPapillonText");
-      btnPapillon.innerText = btnPapillonText;
-    }
-
 
     if (localStorage.getItem("tauxGenerationSoleil")) {
-      const tauxGenerationSoleilText = localStorage.getItem("tauxGenerationSoleil");
+      let tauxGenerationSoleilText = localStorage.getItem("tauxGenerationSoleil");
       tauxGenerationSoleil.textContent = tauxGenerationSoleilText;
     }
     if (localStorage.getItem("tauxGenerationFeuille")) {
-      const tauxGenerationFeuilleText = localStorage.getItem("tauxGenerationFeuille");
+      let tauxGenerationFeuilleText = localStorage.getItem("tauxGenerationFeuille");
       tauxGenerationFeuille.textContent = tauxGenerationFeuilleText;
     }
   }
 //-------  INITIALISATION APP ----------
 
 function initialiserApp() {
+  chargerProg();
   btnSoleil.addEventListener('click', function() {
     acheterPouvoirAutomatique('soleil', soleil.cout, soleil.temps, soleil.ptsGen);
     btnSoleil.innerText = ((soleil.cout) + '🪙'); 
+    sauvegarderProgression();
   });
 
   btnFeuille.addEventListener('click', function() {
     acheterPouvoirAutomatique('feuille',feuille.cout, feuille.temps, feuille.ptsGen);
     btnFeuille.innerText = ((feuille.cout) + '🪙'); 
+    sauvegarderProgression();
   });
-  
+
 }
 
 initialiserApp();
