@@ -16,11 +16,11 @@ let tauxGenerationAuto = 0;
 // VARIABLES BOUTIQUE (bouton,texte)
 let btnSoleil = document.querySelector('#btn-soleil');
 let btnFeuille = document.querySelector('#btn-feuille');
-const btnPapillon = document.querySelector('#btn-papillon');
+let btnPapillon = document.querySelector('#btn-papillon');
 
 let tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
 let tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
-const tauxGenerationPapillon = document.getElementById('taux-generation-papillon');
+let tauxGenerationPapillon = document.getElementById('taux-generation-papillon');
 
 // VARIABLES DES POUVOIRS
 let soleil = {
@@ -58,8 +58,8 @@ bonusTerre.addEventListener('click', gererClicBonusTerre);
 
 // FONCTIONS AU CLIC
 function gererClicArbre() { 
-  points++;
-  mettreAJourPorteMonnaie();
+  points += papillon.clic;
+    mettreAJourPorteMonnaie();
   sauvegarderProgression();
 }
 
@@ -70,26 +70,16 @@ function gererClicBonusTerre() {
 
 }
 
-
-// ----- FONCTIONS AUTOMATIQUES
-   function ajouterPointsAutomatiquement() {  // POINTS AUTOMATIQUES TOUTES LES 5 secondes(5000 millisecondes)
-      points++;
-      mettreAJourPorteMonnaie(); 
-      sauvegarderProgression();
-}
-   //déclare 
- setInterval(ajouterPointsAutomatiquement, 5000);
-
-
 //ACHAT DE POUVOIRS AUTO
 function acheterPouvoirAutomatique(pouvoir,cout,tempsEntrePoints,pointsParGeneration){
-  if (points >= soleil.cout && pouvoir === 'soleil') {        points -= cout; 
+  if (points >= soleil.cout && pouvoir === 'soleil') {
+    points -= cout; 
 
     // VARIABLES : Augmente  prix et capacité de génération
     cout += 10; 
     soleil.cout = soleil.cout + 10;
 
-    // Augmente le pts de 10 par min
+    // Augmente les pts de 10 par min
     pointsParGeneration += 10; 
 
          // Affiche la valeur de ptsGen avant et après l'augmentation
@@ -109,13 +99,12 @@ if (!intervalId) {
     console.log('tauxGenerationAuto:', tauxGenerationAuto);
     points += soleil.ptsGen;
     mettreAJourPorteMonnaie();
-  }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
+  }, tempsEntrePoints * 1000); // 
 }
 
     // MAJ texte du taux de génération 
     tauxGenerationSoleil.textContent = `Génère: ${soleil.ptsGen}🪙/0.30s`;
     afficherLicorneDialogue("Pouvoir acheté !");
-
 
   } else if (points >= feuille.cout && pouvoir === 'feuille') {
     points -= cout;
@@ -133,11 +122,9 @@ if (!intervalId) {
       
     mettreAJourPorteMonnaie();
     sauvegarderProgression();
-    console.log("Progression sauvegardée .");
 
 
     //POUVOIR FEUILLES
-
     if (!intervalIdFeuille) {
       intervalIdFeuille = setInterval(function () {
         console.log('feuille.ptsGen:', feuille.ptsGen);
@@ -146,7 +133,7 @@ if (!intervalId) {
         mettreAJourPorteMonnaie();
         sauvegarderProgression();
 
-      }, tempsEntrePoints * 1000); // Convertit secondes en millisecondes
+      }, tempsEntrePoints * 1000); // 1mn
     }
       //MAJ du p qui affiche le taux
       tauxGenerationFeuille.textContent = `Génère: ${feuille.ptsGen}🪙/min`;
@@ -157,8 +144,37 @@ if (!intervalId) {
     }
   }
 
-// BULLE DE DIALOGUE
-// Afficher bulle de dialogue avec le message de la licorne
+// ACHAT DE POUVOIRS AU CLIC
+function acheterPouvoirClic (pouvoir, cout, clic) {
+  if (points >= cout && pouvoir === 'papillon') {
+    points -= cout;
+
+    //augmente cout de 30
+    cout+=30;
+    papillon.cout += 30;
+
+    papillon.clic++;
+
+
+    // Met à jour le texte du taux de génération du papillon
+    tauxGenerationPapillon.textContent = `+${papillon.clic}🪙/clic`;
+
+    // Met à jour le porte-monnaie
+    mettreAJourPorteMonnaie();
+    sauvegarderProgression();
+
+    console.log("Prix après achat :", cout);
+
+    afficherLicorneDialogue("Pouvoir acheté !");
+  } else {
+    afficherLicorneDialogue("Tu n'as pas assez de pièces.. Continues de cliquer !");
+  }
+}
+
+
+
+
+// BULLE DIALOGUE DE LA LICORNE
 function afficherLicorneDialogue(message) {
   const licorneDialogue = document.getElementById('licorneDialogue');
   const licorneMessage = document.getElementById('licorneMessage');
@@ -166,13 +182,11 @@ function afficherLicorneDialogue(message) {
   licorneMessage.textContent = message;
   licorneDialogue.classList.remove('d-none');
 
-  // Masquer la bulle de dialogue après quelques secondes
+  // masquer bulle après 5secondes
   setTimeout(function() {
     licorneDialogue.classList.add('d-none');
-  }, 50000); // Durée en millisecondes (5 secondes dans cet exemple)
+  }, 5000); // 5secondes
 }
-
-// Fonction pour fermer la bulle de dialogue 
 function fermerLicorneDialogue() {
   const licorneDialogue = document.getElementById('licorneDialogue');
   licorneDialogue.classList.add('d-none');
@@ -184,12 +198,18 @@ function sauvegarderProgression() {
     //pouvoirs auto
   localStorage.setItem("soleil", JSON.stringify(soleil)); 
   localStorage.setItem("feuille", JSON.stringify(feuille));
+  localStorage.setItem("papillon", JSON.stringify(papillon));
+
 
   localStorage.setItem("btnSoleilText", btnSoleil.innerText);
   localStorage.setItem("btnFeuilleText", btnFeuille.innerText);
+  localStorage.setItem("btnPapillonText", btnPapillon.innerText);
+
 
   localStorage.setItem("tauxGenerationSoleil", tauxGenerationSoleil.textContent);
   localStorage.setItem("tauxGenerationFeuille", tauxGenerationFeuille.textContent);
+  localStorage.setItem("tauxGenerationPapillon", tauxGenerationPapillon.textContent);
+
 
 }
 function chargerProg() {
@@ -208,7 +228,9 @@ function chargerProg() {
     if (localStorage.getItem("feuille")) {
       feuille = JSON.parse(localStorage.getItem("feuille"));
     }
-
+    if (localStorage.getItem("papillon")) {
+      papillon = JSON.parse(localStorage.getItem("papillon"));
+    }
 
     if (localStorage.getItem("btnSoleilText")) {
       let btnSoleilText = localStorage.getItem("btnSoleilText");
@@ -217,6 +239,10 @@ function chargerProg() {
     if (localStorage.getItem("btnFeuilleText")) {
       let btnFeuilleText = localStorage.getItem("btnFeuilleText");
       btnFeuille.innerText = btnFeuilleText;
+    }
+    if (localStorage.getItem("btnPapillonText")) {
+      let btnPapillonText = localStorage.getItem("btnPapillonText");
+      btnPapillon.innerText = btnPapillonText;
     }
 
     if (localStorage.getItem("tauxGenerationSoleil")) {
@@ -227,6 +253,11 @@ function chargerProg() {
       let tauxGenerationFeuilleText = localStorage.getItem("tauxGenerationFeuille");
       tauxGenerationFeuille.textContent = tauxGenerationFeuilleText;
     }
+    if (localStorage.getItem("tauxGenerationPapillon")) {
+      let tauxGenerationPapillonText = localStorage.getItem("tauxGenerationPapillon");
+      tauxGenerationPapillon.textContent = tauxGenerationPapillonText;
+    }
+
   }
 //-------  INITIALISATION APP ----------
 
@@ -243,7 +274,12 @@ function initialiserApp() {
     btnFeuille.innerText = ((feuille.cout) + '🪙'); 
     sauvegarderProgression();
   });
-
+            //pouvoirs clic
+  btnPapillon.addEventListener('click', function() {
+    acheterPouvoirClic('papillon',papillon.cout, papillon.clic,);
+    btnPapillon.innerText = papillon.cout + '🪙';
+        sauvegarderProgression();
+  });
 }
 
 initialiserApp();
