@@ -17,10 +17,13 @@ let tauxGenerationAuto = 0;
 let btnSoleil = document.querySelector('#btn-soleil');
 let btnFeuille = document.querySelector('#btn-feuille');
 let btnPapillon = document.querySelector('#btn-papillon');
+let btnEpee = document.querySelector('#btn-epee');
 
 let tauxGenerationFeuille = document.getElementById('taux-generation-feuille');
 let tauxGenerationSoleil = document.getElementById('taux-generation-soleil');
 let tauxGenerationPapillon = document.getElementById('taux-generation-papillon');
+let tauxGenerationEpee = document.getElementById('taux-generation-epee');
+
 
 // VARIABLES DES POUVOIRS
 let soleil = {
@@ -38,6 +41,10 @@ let feuille = {
 let papillon = {
   "cout":100,
   "clic":1,
+};
+let epee = {
+  "cout":1500,
+  "clic":9,
 };
 
 // -----------------FONCTIONS----------------------- 
@@ -83,11 +90,9 @@ function acheterPouvoirAutomatique(pouvoir,cout,tempsEntrePoints,pointsParGenera
     pointsParGeneration += 10; 
 
          // Affiche la valeur de ptsGen avant et après l'augmentation
-     console.log("Valeur de ptsGen avant l'augmentation :", soleil.ptsGen);
      soleil.ptsGen = pointsParGeneration; // Met à jour la valeur de ptsGen
-     console.log("Valeur de ptsGen après l'augmentation :", soleil.ptsGen);
     tauxGenerationAuto = pointsParGeneration;
-    console.log("tauxGenerationAuto:", tauxGenerationAuto);
+    console.log("tauxGenerationAuto:SOLEIL", tauxGenerationAuto);
 
     mettreAJourPorteMonnaie();
     sauvegarderProgression();
@@ -101,7 +106,6 @@ if (!intervalId) {
     mettreAJourPorteMonnaie();
   }, tempsEntrePoints * 1000); // 
 }
-
     // MAJ texte du taux de génération 
     tauxGenerationSoleil.textContent = `Génère: ${soleil.ptsGen}🪙/0.30s`;
     afficherLicorneDialogue("Pouvoir acheté !");
@@ -132,7 +136,6 @@ if (!intervalId) {
         points += feuille.ptsGen;
         mettreAJourPorteMonnaie();
         sauvegarderProgression();
-
       }, tempsEntrePoints * 1000); // 1mn
     }
       //MAJ du p qui affiche le taux
@@ -147,30 +150,37 @@ if (!intervalId) {
 // ACHAT DE POUVOIRS AU CLIC
 function acheterPouvoirClic (pouvoir, cout, clic) {
   if (points >= cout && pouvoir === 'papillon') {
-    points -= cout;
+      points -= cout;
+    
+      cout+=30;
+      papillon.cout += 30;
+      papillon.clic++;
 
-    //augmente cout de 30
-    cout+=30;
-    papillon.cout += 30;
+    tauxGenerationPapillon.textContent = `Ajoute +${papillon.clic}🪙/clic`;
 
-    papillon.clic++;
-
-
-    // Met à jour le texte du taux de génération du papillon
-    tauxGenerationPapillon.textContent = `+${papillon.clic}🪙/clic`;
-
-    // Met à jour le porte-monnaie
     mettreAJourPorteMonnaie();
     sauvegarderProgression();
 
-    console.log("Prix après achat :", cout);
+    afficherLicorneDialogue("Bravo ! ");
+  } else if (points >= cout && pouvoir === 'epee') {
+    // Mise à jour des points et du coût du pouvoir épée
+    points -= cout;
+    cout += 150; // ajuste le coût pour la prochaine fois
+    epee.cout += 150; // ajuste le coût total de l'épée
+    epee.clic++; // augmente le nombre de pièces générées par clic
 
-    afficherLicorneDialogue("Pouvoir acheté !");
+    // Mise à jour du texte dans la boutique pour le pouvoir épée
+    tauxGenerationEpee.textContent = `Ajoute +${epee.clic}🪙/clic`;
+
+    // Mettre à jour le porte-monnaie et sauvegarder la progression
+    mettreAJourPorteMonnaie();
+    sauvegarderProgression();
+
+    afficherLicorneDialogue("Ca va flamber !");
   } else {
-    afficherLicorneDialogue("Tu n'as pas assez de pièces.. Continues de cliquer !");
+    afficherLicorneDialogue("Tu n'as pas assez de pièces.. CLIQUES !");
   }
 }
-
 
 
 
@@ -199,16 +209,19 @@ function sauvegarderProgression() {
   localStorage.setItem("soleil", JSON.stringify(soleil)); 
   localStorage.setItem("feuille", JSON.stringify(feuille));
   localStorage.setItem("papillon", JSON.stringify(papillon));
+  localStorage.setItem("epee", JSON.stringify(epee));
 
 
   localStorage.setItem("btnSoleilText", btnSoleil.innerText);
   localStorage.setItem("btnFeuilleText", btnFeuille.innerText);
   localStorage.setItem("btnPapillonText", btnPapillon.innerText);
+  localStorage.setItem("btnEpeeText", btnEpee.innerText);
 
 
   localStorage.setItem("tauxGenerationSoleil", tauxGenerationSoleil.textContent);
   localStorage.setItem("tauxGenerationFeuille", tauxGenerationFeuille.textContent);
   localStorage.setItem("tauxGenerationPapillon", tauxGenerationPapillon.textContent);
+  localStorage.setItem("tauxGenerationEpee", tauxGenerationEpee.textContent);
 
 
 }
@@ -231,6 +244,10 @@ function chargerProg() {
     if (localStorage.getItem("papillon")) {
       papillon = JSON.parse(localStorage.getItem("papillon"));
     }
+    if (localStorage.getItem("epee")) {
+      epee = JSON.parse(localStorage.getItem("epee"));
+    }
+
 
     if (localStorage.getItem("btnSoleilText")) {
       let btnSoleilText = localStorage.getItem("btnSoleilText");
@@ -244,6 +261,10 @@ function chargerProg() {
       let btnPapillonText = localStorage.getItem("btnPapillonText");
       btnPapillon.innerText = btnPapillonText;
     }
+    if (localStorage.getItem("btnEpeeText")) {
+      let btnEpeeText = localStorage.getItem("btnEpeeText");
+      btnEpee.innerText = btnEpeeText;
+    }
 
     if (localStorage.getItem("tauxGenerationSoleil")) {
       let tauxGenerationSoleilText = localStorage.getItem("tauxGenerationSoleil");
@@ -256,6 +277,10 @@ function chargerProg() {
     if (localStorage.getItem("tauxGenerationPapillon")) {
       let tauxGenerationPapillonText = localStorage.getItem("tauxGenerationPapillon");
       tauxGenerationPapillon.textContent = tauxGenerationPapillonText;
+    }
+    if (localStorage.getItem("tauxGenerationEpee")) {
+      let tauxGenerationEpeeText = localStorage.getItem("tauxGenerationEpee");
+      tauxGenerationEpee.textContent = tauxGenerationEpeeText;
     }
 
   }
@@ -280,6 +305,12 @@ function initialiserApp() {
     btnPapillon.innerText = papillon.cout + '🪙';
         sauvegarderProgression();
   });
+  btnEpee.addEventListener('click', function() {
+    acheterPouvoirClic('epee',epee.cout, epee.clic,);
+    btnEpee.innerText = epee.cout + '🪙';
+        sauvegarderProgression();
+  });
+
 }
 
 initialiserApp();
