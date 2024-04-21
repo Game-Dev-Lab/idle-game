@@ -76,11 +76,9 @@ function gererClicBonusTerre() {
       points++;
       mettreAJourPorteMonnaie(); 
       sauvegarderProgression();
-
 }
    //déclare 
  setInterval(ajouterPointsAutomatiquement, 5000);
-
 
 
 //ACHAT DE POUVOIRS AUTO
@@ -159,33 +157,8 @@ if (!intervalId) {
     }
   }
 
-  // POURVOIR AU CLIC PAPILLON
-  function acheterPapillon() {
-    console.log("Nombre de points disponibles avant l'achat du papillon :", points);
-    console.log("Coût du papillon avant l'achat :", papillon.cout);
-
-    if (points >= papillon.cout) {
-        points -= papillon.cout;
-        papillon.cout += 30;
-        console.log("Nombre de clics du papillon avant l'achat :", papillon.clic);
-        papillon.clic++; // Augmentation du bonus de clic
-
-        btnPapillon.innerText = `${papillon.cout}🪙`;
-        tauxGenerationPapillon.textContent = `Ajoute +${papillon.clic} pièces au clic`;
-
-        mettreAJourPorteMonnaie();
-        sauvegarderProgression();
-        
-
-        console.log("Nombre de points disponibles après l'achat du papillon :", points);
-        console.log("Coût du papillon après l'achat :", papillon.cout);
-        console.log("Nombre de clics du papillon après l'achat :", papillon.clic);
-    } else {
-        afficherLicorneDialogue("Tu n'as pas assez de pièces.. Continue de cliquer !");
-    }
-}
 // BULLE DE DIALOGUE
-// Afficher la bulle de dialogue avec le message de la licorne
+// Afficher bulle de dialogue avec le message de la licorne
 function afficherLicorneDialogue(message) {
   const licorneDialogue = document.getElementById('licorneDialogue');
   const licorneMessage = document.getElementById('licorneMessage');
@@ -211,12 +184,12 @@ function sauvegarderProgression() {
     //boutique pouvoir
   localStorage.setItem("soleil", JSON.stringify(soleil)); 
   localStorage.setItem("feuille", JSON.stringify(feuille));
+
+
   localStorage.setItem("btnSoleilText", btnSoleil.innerText);
   localStorage.setItem("btnFeuilleText", btnFeuille.innerText);
-  localStorage.setItem("btnPapillonText", btnPapillon.innerText);
   localStorage.setItem("tauxGenerationSoleil", tauxGenerationSoleil.textContent);
   localStorage.setItem("tauxGenerationFeuille", tauxGenerationFeuille.textContent);
-  localStorage.setItem("tauxGenerationPapillon", tauxGenerationPapillon.textContent);
 
   
         //recup les données et les convertit soit en nb entier soit JSON
@@ -233,9 +206,6 @@ function sauvegarderProgression() {
     }
     if (localStorage.getItem("feuille")) {
       feuille = JSON.parse(localStorage.getItem("feuille"));
-    }
-    if (localStorage.getItem("papillon")) {
-      papillon = JSON.parse(localStorage.getItem("papillon"));
     }
 
 
@@ -261,10 +231,6 @@ function sauvegarderProgression() {
       const tauxGenerationFeuilleText = localStorage.getItem("tauxGenerationFeuille");
       tauxGenerationFeuille.textContent = tauxGenerationFeuilleText;
     }
-    if (localStorage.getItem("tauxGenerationPapillon")) {
-      const tauxGenerationPapillonText = localStorage.getItem("tauxGenerationPapillon");
-      tauxGenerationPapillon.textContent = tauxGenerationPapillonText;
-    }
   }
 //-------  INITIALISATION APP ----------
 
@@ -279,7 +245,6 @@ function initialiserApp() {
     btnFeuille.innerText = ((feuille.cout) + '🪙'); 
   });
   
-    acheterPapillon();
 }
 
 initialiserApp();
