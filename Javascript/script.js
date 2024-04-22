@@ -66,6 +66,7 @@ bonusTerre.addEventListener('click', gererClicBonusTerre);
 // FONCTIONS AU CLIC
 function gererClicArbre() { 
   points += papillon.clic;
+  console.log(`Points générés par papillon : ${papillon.clic}`);
     mettreAJourPorteMonnaie();
   sauvegarderProgression();
 }
@@ -89,7 +90,6 @@ function acheterPouvoirAutomatique(pouvoir,cout,tempsEntrePoints,pointsParGenera
     // Augmente les pts de 10 par min
     pointsParGeneration += 10; 
 
-         // Affiche la valeur de ptsGen avant et après l'augmentation
      soleil.ptsGen = pointsParGeneration; // Met à jour la valeur de ptsGen
     tauxGenerationAuto = pointsParGeneration;
     console.log("tauxGenerationAuto:SOLEIL", tauxGenerationAuto);
@@ -104,6 +104,7 @@ if (!intervalId) {
     console.log('tauxGenerationAuto:', tauxGenerationAuto);
     points += soleil.ptsGen;
     mettreAJourPorteMonnaie();
+    console.log('Points générés par soleil :', soleil.ptsGen);
   }, tempsEntrePoints * 1000); // 
 }
     // MAJ texte du taux de génération 
@@ -117,10 +118,10 @@ if (!intervalId) {
     feuille.cout = feuille.cout + 50;
 
     pointsParGeneration +=100;
-    console.log("Valeur de ptsGen FEUILLLE avant l'augmentation :", feuille.ptsGen);
+    console.log("ptsGen FEUILLLE avant l'augmentation :", feuille.ptsGen);
     feuille.ptsGen = pointsParGeneration; // Met à jour la valeur de ptsGen
     
-    console.log("Valeur de ptsGen FEUIILLLE après l'augmentation :", feuille.ptsGen);
+    console.log("ptsGen FEUIILLLE après l'augmentation :", feuille.ptsGen);
     tauxGenerationAuto = pointsParGeneration;
     console.log("tauxGenerationAuto:", tauxGenerationAuto);
       
